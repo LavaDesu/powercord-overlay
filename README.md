@@ -54,7 +54,7 @@ discord-plugged.override {
 }
 ```
 
-If you're using flakes, you can use inputs to fetch them instead
+If you're using flakes, you can instead use inputs to fetch them
 ```nix
 # flake.nix
 {
@@ -76,9 +76,18 @@ discord-plugged.override {
 }
 ```
 
+## Additional notes
+- The updater should be disabled, it doesn't work for obvious reasons :)
+- Settings are stored imperatively in `$XDG_CONFIG_HOME/powercord`
+  (and cache in `$XDG_CACHE_HOME/powercord`)
+- Some yarn2nix things:
+    - The output structure is quite ugly (`<powercord>/libexec/powercord/deps/powercord/`)
+    - `<powercord>/libexec/powercord/deps/powercord/node_modules` doesn't actually point
+      to powercord's dependencies, which is why we need the first part in [our patch](./misc/powercord.patch)
+
 ## Some disclaimers
 Powercord *is* against Discord's Terms of Service. However, at the time of writing, Discord isn't
 currently hunting down modded client users and punishing them or anything.
 
 While you *should* be safe, **you are at your own risk** when using this overlay, and I am not
-responsible for any damages that may happen as a result from using Powercord.
+responsible for any damages that may happen as a result of using Powercord.
