@@ -20,6 +20,11 @@
       ln -s ${mappedPlugins} src/Powercord/plugins
       ln -s ${mappedThemes} src/Powercord/themes
     '';
+
+  meta = {
+    homepage = "https://powercord.dev";
+    license = "unfree";
+  };
 }).overrideAttrs (_: {
   doDist = false;
 })
