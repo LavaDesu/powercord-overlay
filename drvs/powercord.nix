@@ -17,8 +17,11 @@
       mappedThemes = map themes;
     in
     ''
-      ln -s ${mappedPlugins} src/Powercord/plugins
-      ln -s ${mappedThemes} src/Powercord/themes
+      cp -r ${mappedPlugins} src/Powercord/plugins
+      cp -r ${mappedThemes} src/Powercord/themes
+
+      chmod -R u+w src/Powercord/plugins
+      chmod -R u+w src/Powercord/themes
     '';
 
   meta = {
