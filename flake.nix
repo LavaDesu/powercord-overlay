@@ -9,14 +9,15 @@
     powercord.flake = false;
   };
 
-  outputs = { self, nixpkgs, utils, ... } @ inputs: utils.lib.mkFlake {
+  outputs = { self, nixpkgs, utils, ... } @ inputs: utils.lib.mkFlake rec {
     inherit self inputs;
 
     # this is the only arch supported in the discord derivation
     supportedSystems = [ "x86_64-linux" ];
 
     channels.nixpkgs.config.allowUnfree = true;
-    channels.nixpkgs.overlaysBuilder = _: [ (import ./overlay.nix inputs) ];
+    channels.nixpkgs.overlaysBuilder = _: [ overlay ];
+    overlay = import ./overlay.nix inputs;
     overlays = utils.lib.exportOverlays { inherit (self) pkgs inputs; };
     outputsBuilder = channels: {
       packages = utils.lib.exportPackages self.overlays channels;
