@@ -1,5 +1,8 @@
-{ inputs
+{ lib
+, inputs
 , mkYarnPackage
+, plugins
+, themes
 }:
 (mkYarnPackage {
   name = "powercord";
@@ -7,4 +10,16 @@
   yarnLock = "${inputs.self}/misc/yarn.lock";
 
   patches = [ ../misc/powercord.patch ];
-}).overrideAttrs (_: { doDist = false; })
+  postPatch =
+    let
+      map = l: lib.concatStringsSep " " l;
+      mappedPlugins = map plugins;
+      mappedThemes = map themes;
+    in
+    ''
+      ln -s ${mappedPlugins} src/Powercord/plugins
+      ln -s ${mappedThemes} src/Powercord/themes
+    '';
+}).overrideAttrs (_: {
+  doDist = false;
+})
