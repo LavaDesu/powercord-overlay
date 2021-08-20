@@ -28,9 +28,9 @@ index 06403b84f23..de4b3313672 100644
 -  SETTINGS_FOLDER: join(__dirname, '..', '..', '..', 'settings'),
 -  CACHE_FOLDER: join(__dirname, '..', '..', '..', '.cache'),
 -  LOGS_FOLDER: join(__dirname, '..', '..', '..', '.logs'),
-+  SETTINGS_FOLDER: join(process.env.XDG_CONFIG_HOME, 'powercord'),
-+  CACHE_FOLDER: join(process.env.XDG_CACHE_HOME, 'powercord'),
-+  LOGS_FOLDER: join(process.env.XDG_CACHE_HOME, 'powercord', 'logs'),
++  SETTINGS_FOLDER: join(process.env.XDG_CONFIG_HOME ?? "~/.config", 'powercord'),
++  CACHE_FOLDER: join(process.env.XDG_CACHE_HOME ?? "~/.cache", 'powercord'),
++  LOGS_FOLDER: join(process.env.XDG_CACHE_HOME ?? "~/.cache", 'powercord', 'logs'),
  
    // Discord Server
    DISCORD_INVITE: 'gs4ZMbBfCh',
