@@ -12,17 +12,15 @@
   patches = [ ../misc/powercord.patch ];
   postPatch =
     let
-      map = l: lib.concatStringsSep " " l;
-      mappedPlugins = map plugins;
-      mappedThemes = map themes;
-    in
-    ''
-      cp -r ${mappedPlugins} src/Powercord/plugins
-      cp -r ${mappedThemes} src/Powercord/themes
+      map = n: l: lib.concatMapStringsSep "\n" (e: ''
+        cp -r ${e} src/Powercord/${n}
+        chmod -R u+w src/Powercord/${n}/${lib.last (lib.splitString "/" e)}
+      '') l;
 
-      chmod -R u+w src/Powercord/plugins
-      chmod -R u+w src/Powercord/themes
-    '';
+      mappedPlugins = map "plugins" plugins;
+      mappedThemes = map "themes" themes;
+    in
+      mappedPlugins + mappedThemes;
 
   meta = {
     homepage = "https://powercord.dev";
