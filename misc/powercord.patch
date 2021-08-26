@@ -1,3 +1,25 @@
+diff --git a/src/Powercord/plugins/pc-moduleManager/index.js b/src/Powercord/plugins/pc-moduleManager/index.js
+index 0cd00cdd545..657396c8565 100644
+--- a/src/Powercord/plugins/pc-moduleManager/index.js
++++ b/src/Powercord/plugins/pc-moduleManager/index.js
+@@ -5,7 +5,7 @@ const { PopoutWindow } = require('powercord/components');
+ const { inject, uninject } = require('powercord/injector');
+ const { findInReactTree } = require('powercord/util');
+ const { Plugin } = require('powercord/entities');
+-const { SpecialChannels: { CSS_SNIPPETS } } = require('powercord/constants');
++const { SETTINGS_FOLDER, SpecialChannels: { CSS_SNIPPETS } } = require('powercord/constants');
+ const { join } = require('path');
+ 
+ const commands = require('./commands');
+@@ -48,7 +48,7 @@ module.exports = class ModuleManager extends Plugin {
+     });
+ 
+     this._quickCSS = '';
+-    this._quickCSSFile = join(__dirname, 'quickcss.css');
++    this._quickCSSFile = join(SETTINGS_FOLDER, 'quickcss.css');
+     this._loadQuickCSS();
+     this._injectSnippets();
+     this.loadStylesheet('scss/style.scss');
 diff --git a/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss b/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss
 index 7bf59d14d9d..94f516f360d 100644
 --- a/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss
@@ -18,7 +40,7 @@ index 7bf59d14d9d..94f516f360d 100644
  .powercord-quickcss {
    --editor-height: 350px;
 diff --git a/src/fake_node_modules/powercord/constants.js b/src/fake_node_modules/powercord/constants.js
-index 06403b84f23..de4b3313672 100644
+index 06403b84f23..14922a2432f 100644
 --- a/src/fake_node_modules/powercord/constants.js
 +++ b/src/fake_node_modules/powercord/constants.js
 @@ -13,9 +13,9 @@ module.exports = Object.freeze({
@@ -28,9 +50,9 @@ index 06403b84f23..de4b3313672 100644
 -  SETTINGS_FOLDER: join(__dirname, '..', '..', '..', 'settings'),
 -  CACHE_FOLDER: join(__dirname, '..', '..', '..', '.cache'),
 -  LOGS_FOLDER: join(__dirname, '..', '..', '..', '.logs'),
-+  SETTINGS_FOLDER: join(process.env.XDG_CONFIG_HOME ?? join(process.env.HOME, ".config"), 'powercord'),
-+  CACHE_FOLDER: join(process.env.XDG_CACHE_HOME ?? join(process.env.HOME, ".cache"), 'powercord'),
-+  LOGS_FOLDER: join(process.env.XDG_CACHE_HOME ?? join(process.env.HOME, ".cache"), 'powercord', 'logs'),
++  SETTINGS_FOLDER: join(process.env.XDG_CONFIG_HOME ?? join(process.env.HOME, '.config'), 'powercord'),
++  CACHE_FOLDER: join(process.env.XDG_CACHE_HOME ?? join(process.env.HOME, '.cache'), 'powercord'),
++  LOGS_FOLDER: join(process.env.XDG_CACHE_HOME ?? join(process.env.HOME, '.cache'), 'powercord', 'logs'),
  
    // Discord Server
    DISCORD_INVITE: 'gs4ZMbBfCh',

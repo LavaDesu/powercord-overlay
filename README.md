@@ -83,7 +83,7 @@ discord-plugged.override {
 - Some yarn2nix things:
     - The output structure is quite ugly (`<powercord>/libexec/powercord/deps/powercord/`)
     - `<powercord>/libexec/powercord/deps/powercord/node_modules` doesn't actually point
-      to powercord's dependencies, which is why we need the first part in [our patch](./misc/powercord.patch)
+      to powercord's dependencies, which is why we need the scss patch in [our patchset](./misc/powercord.patch)
 
 ## Some disclaimers
 Powercord *is* against Discord's Terms of Service. However, at the time of writing, Discord isn't
