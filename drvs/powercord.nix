@@ -10,14 +10,24 @@ stdenvNoCC.mkDerivation {
 
   installPhase =
     let
+      sanitise = s:
+        (lib.strings.toLower
+          (lib.strings.replaceStrings [" "] ["-"] s));
+      readName = f: sanitise (builtins.fromJSON (builtins.readFile f)).name;
+
+      fromDrvs = drvs: mn: builtins.map (drv: {
+        inherit (drv) outPath;
+        name = readName "${drv.outPath}/${mn}";
+      }) drvs;
+
       map = n: l: lib.concatMapStringsSep "\n" (e: ''
         chmod 755 $out/src/Powercord/${n}
-        cp -a ${e} $out/src/Powercord/${n}
-        chmod -R u+w $out/src/Powercord/${n}/${lib.last (lib.splitString "/" e)}
+        cp -a ${e.outPath} $out/src/Powercord/${n}/${e.name}
+        chmod -R u+w $out/src/Powercord/${n}/${e.name}
       '') l;
 
-      mappedPlugins = map "plugins" plugins;
-      mappedThemes = map "themes" themes;
+      mappedPlugins = map "plugins" (fromDrvs plugins "manifest.json");
+      mappedThemes = map "themes" (fromDrvs themes "powercord_manifest.json");
     in ''
       cp -a $src $out
       chmod 755 $out
