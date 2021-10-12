@@ -80,10 +80,6 @@ discord-plugged.override {
 - The updater should be disabled, it doesn't work for obvious reasons :)
 - Settings are stored imperatively in `$XDG_CONFIG_HOME/powercord`
   (and cache in `$XDG_CACHE_HOME/powercord`)
-- Some yarn2nix things:
-    - The output structure is quite ugly (`<powercord>/libexec/powercord/deps/powercord/`)
-    - `<powercord>/libexec/powercord/deps/powercord/node_modules` doesn't actually point
-      to powercord's dependencies, which is why we need the scss patch in [our patchset](./misc/powercord.patch)
 
 ## Some disclaimers
 Powercord *is* against Discord's Terms of Service. However, at the time of writing, Discord isn't

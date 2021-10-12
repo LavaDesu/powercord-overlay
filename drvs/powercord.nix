@@ -1,31 +1,34 @@
 { lib
-, inputs
-, mkYarnPackage
+, powercord-unwrapped
+, stdenvNoCC
 , plugins
 , themes
 }:
-(mkYarnPackage {
+stdenvNoCC.mkDerivation {
   name = "powercord";
-  src = inputs.powercord;
-  yarnLock = "${inputs.self}/misc/yarn.lock";
+  src = powercord-unwrapped.out;
 
-  patches = [ ../misc/powercord.patch ];
-  postPatch =
+  installPhase =
     let
       map = n: l: lib.concatMapStringsSep "\n" (e: ''
-        cp -r ${e} src/Powercord/${n}
-        chmod -R u+w src/Powercord/${n}/${lib.last (lib.splitString "/" e)}
+        chmod 755 $out/src/Powercord/${n}
+        cp -a ${e} $out/src/Powercord/${n}
+        chmod -R u+w $out/src/Powercord/${n}/${lib.last (lib.splitString "/" e)}
       '') l;
 
       mappedPlugins = map "plugins" plugins;
       mappedThemes = map "themes" themes;
-    in
-      mappedPlugins + mappedThemes;
+    in ''
+      cp -a $src $out
+      chmod 755 $out
+      ln -s ${powercord-unwrapped.deps}/node_modules $out/node_modules
 
-  meta = {
-    homepage = "https://powercord.dev";
-    license = "unfree";
+      ${mappedPlugins}
+      ${mappedThemes}
+    '';
+
+  passthru.unwrapped = powercord-unwrapped;
+  meta = powercord-unwrapped.meta // {
+    priority = (powercord-unwrapped.meta.priority or 0) - 1;
   };
-}).overrideAttrs (_: {
-  doDist = false;
-})
+}

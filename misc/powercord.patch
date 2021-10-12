@@ -20,25 +20,6 @@ index 0cd00cdd545..657396c8565 100644
      this._loadQuickCSS();
      this._injectSnippets();
      this.loadStylesheet('scss/style.scss');
-diff --git a/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss b/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss
-index 7bf59d14d9d..94f516f360d 100644
---- a/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss
-+++ b/src/Powercord/plugins/pc-moduleManager/scss/quickcss.scss
-@@ -1,9 +1,9 @@
- // gross, but it works
--@import '../../../../../node_modules/codemirror/lib/codemirror';
--@import '../../../../../node_modules/codemirror/addon/dialog/dialog';
--@import '../../../../../node_modules/codemirror/addon/fold/foldgutter';
--@import '../../../../../node_modules/codemirror/addon/lint/lint';
--@import '../../../../../node_modules/codemirror/addon/hint/show-hint';
-+@import '../../../../../../../node_modules/codemirror/lib/codemirror';
-+@import '../../../../../../../node_modules/codemirror/addon/dialog/dialog';
-+@import '../../../../../../../node_modules/codemirror/addon/fold/foldgutter';
-+@import '../../../../../../../node_modules/codemirror/addon/lint/lint';
-+@import '../../../../../../../node_modules/codemirror/addon/hint/show-hint';
- 
- .powercord-quickcss {
-   --editor-height: 350px;
 diff --git a/src/fake_node_modules/powercord/constants.js b/src/fake_node_modules/powercord/constants.js
 index 06403b84f23..14922a2432f 100644
 --- a/src/fake_node_modules/powercord/constants.js
