@@ -10,10 +10,7 @@ stdenvNoCC.mkDerivation {
 
   installPhase =
     let
-      sanitise = s:
-        (lib.strings.toLower
-          (lib.strings.replaceStrings [" "] ["-"] s));
-      readName = f: sanitise (builtins.fromJSON (builtins.readFile f)).name;
+      readName = f: lib.strings.sanitizeDerivationName (builtins.fromJSON (builtins.readFile f)).name;
 
       fromDrvs = drvs: mn: builtins.map (drv: {
         inherit (drv) outPath;
