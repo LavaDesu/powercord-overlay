@@ -20,6 +20,25 @@ index 0cd00cdd545..657396c8565 100644
      this._loadQuickCSS();
      this._injectSnippets();
      this.loadStylesheet('scss/style.scss');
+diff --git a/src/browserWindow.js b/src/browserWindow.js
+index f845839ebe8..a5689c37a31 100644
+--- a/src/browserWindow.js
++++ b/src/browserWindow.js
+@@ -6,12 +6,13 @@
+ 
+ const { join } = require('path');
+ const { BrowserWindow } = require('electron');
++const { SETTINGS_FOLDER } = require('./fake_node_modules/powercord/constants');
+ 
+ let settings = {};
+ let transparency = false;
+ let ewp = false;
+ try {
+-  settings = require(join(__dirname, '../settings/pc-general.json'));
++  settings = require(join(SETTINGS_FOLDER, 'pc-general.json'));
+   transparency = settings.transparentWindow;
+   ewp = settings.experimentalWebPlatform;
+ } catch (e) {}
 diff --git a/src/fake_node_modules/powercord/constants.js b/src/fake_node_modules/powercord/constants.js
 index 06403b84f23..14922a2432f 100644
 --- a/src/fake_node_modules/powercord/constants.js
