@@ -3,14 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    utils.url = "github:numtide/flake-utils";
-
     powercord.url = "github:powercord-org/powercord";
     powercord.flake = false;
   };
 
-  outputs = { self, nixpkgs, utils, ... } @ inputs: utils.lib.eachSystem ["x86_64-linux"] (system:
+  outputs = { self, nixpkgs, ... } @ inputs:
   let
+    system = "x86_64-linux";
     overlay = import ./overlay.nix inputs;
     pkgs = import nixpkgs {
       inherit system;
@@ -19,6 +18,6 @@
     };
   in {
     inherit overlay;
-    packages = { inherit (pkgs) powercord-unwrapped powercord discord-plugged; };
-  });
+    packages.${system} = { inherit (pkgs) powercord-unwrapped powercord discord-plugged; };
+  };
 }
