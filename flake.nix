@@ -3,24 +3,22 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    utils.url = "github:numtide/flake-utils";
 
     powercord.url = "github:powercord-org/powercord";
     powercord.flake = false;
   };
 
-  outputs = { self, nixpkgs, utils, ... } @ inputs: utils.lib.mkFlake rec {
-    inherit self inputs;
-
-    # this is the only arch supported in the discord derivation
-    supportedSystems = [ "x86_64-linux" ];
-
-    channels.nixpkgs.config.allowUnfree = true;
-    channels.nixpkgs.overlaysBuilder = _: [ overlay ];
+  outputs = { self, nixpkgs, utils, ... } @ inputs: utils.lib.eachSystem ["x86_64-linux"] (system:
+  let
     overlay = import ./overlay.nix inputs;
-    overlays = utils.lib.exportOverlays { inherit (self) pkgs inputs; };
-    outputsBuilder = channels: {
-      packages = utils.lib.exportPackages self.overlays channels;
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [ overlay ];
     };
-  };
+  in {
+    inherit overlay;
+    packages = { inherit (pkgs) powercord-unwrapped powercord discord-plugged; };
+  });
 }
