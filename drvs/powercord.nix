@@ -12,19 +12,23 @@ stdenvNoCC.mkDerivation {
     let
       readName = f: lib.strings.sanitizeDerivationName (builtins.fromJSON (builtins.readFile f)).name;
 
-      fromDrvs = drvs: mn: builtins.map (drv: {
-        inherit (drv) outPath;
-        name = readName "${drv.outPath}/${mn}";
-      }) drvs;
+      fromList = l: mn: builtins.map (e:
+      let
+        # We're relying on nix to coerce this into something we can use
+        path = "${e}";
+      in {
+        inherit path;
+        name = readName "${path}/${mn}";
+      }) l;
 
       map = n: l: lib.concatMapStringsSep "\n" (e: ''
         chmod 755 $out/src/Powercord/${n}
-        cp -a ${e.outPath} $out/src/Powercord/${n}/${e.name}
+        cp -a ${e.path} $out/src/Powercord/${n}/${e.name}
         chmod -R u+w $out/src/Powercord/${n}/${e.name}
       '') l;
 
-      mappedPlugins = map "plugins" (fromDrvs plugins "manifest.json");
-      mappedThemes = map "themes" (fromDrvs themes "powercord_manifest.json");
+      mappedPlugins = map "plugins" (fromList plugins "manifest.json");
+      mappedThemes = map "themes" (fromList themes "powercord_manifest.json");
     in ''
       cp -a $src $out
       chmod 755 $out
