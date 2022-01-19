@@ -10,25 +10,25 @@ stdenvNoCC.mkDerivation {
 
   installPhase =
     let
-      readName = f: lib.strings.sanitizeDerivationName (builtins.fromJSON (builtins.readFile f)).name;
+      readName = file: lib.strings.sanitizeDerivationName (builtins.fromJSON (builtins.readFile file)).name;
 
-      fromList = l: mn: builtins.map (e:
+      intoAddons = list: manifestName: builtins.map (element:
       let
         # We're relying on nix to coerce this into something we can use
-        path = "${e}";
+        path = "${element}";
       in {
         inherit path;
-        name = readName "${path}/${mn}";
-      }) l;
+        name = readName "${path}/${manifestName}";
+      }) list;
 
-      map = n: l: lib.concatMapStringsSep "\n" (e: ''
-        chmod 755 $out/src/Powercord/${n}
-        cp -a ${e.path} $out/src/Powercord/${n}/${e.name}
-        chmod -R u+w $out/src/Powercord/${n}/${e.name}
-      '') l;
+      map = type: addons: lib.concatMapStringsSep "\n" (addon: ''
+        chmod 755 $out/src/Powercord/${type}
+        cp -a ${addon.path} $out/src/Powercord/${type}/${addon.name}
+        chmod -R u+w $out/src/Powercord/${type}/${addon.name}
+      '') addons;
 
-      mappedPlugins = map "plugins" (fromList plugins "manifest.json");
-      mappedThemes = map "themes" (fromList themes "powercord_manifest.json");
+      mappedPlugins = map "plugins" (intoAddons plugins "manifest.json");
+      mappedThemes = map "themes" (intoAddons themes "powercord_manifest.json");
     in ''
       cp -a $src $out
       chmod 755 $out
