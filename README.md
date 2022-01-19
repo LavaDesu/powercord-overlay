@@ -46,10 +46,10 @@ Example:
 # where you put your packages
 discord-plugged.override {
   plugins = [
-    (pkgs.fetchTarball "https://github.com/NurMarvin/discord-tweaks/archive/master.tar.gz")
+    (builtins.fetchTarball "https://github.com/NurMarvin/discord-tweaks/archive/master.tar.gz")
   ];
   themes = [
-    (pkgs.fetchTarball "https://github.com/Dyzean/Tokyo-Night/archive/master.tar.gz")
+    (builtins.fetchTarball "https://github.com/Dyzean/Tokyo-Night/archive/master.tar.gz")
   ];
 }
 ```
