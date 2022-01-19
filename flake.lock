@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1641230035,
-        "narHash": "sha256-hFyqihERaTbLxCOlugy/rpp22VLtLh8SPRnA2uu3F/8=",
+        "lastModified": 1642281915,
+        "narHash": "sha256-jcMsXmmO1knyf99o242A+2cy1A0eKa9afly0cwBknPA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "78cd22c1b8604de423546cd49bfe264b786eca13",
+        "rev": "d5dae6569ea9952f1ae4e727946d93a71c507821",
         "type": "github"
       },
       "original": {
@@ -19,11 +19,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1640708207,
-        "narHash": "sha256-bZfAf3DqoAmqCuPfkvBT6TfAEJWYRZ8jT7azj/HZ7W0=",
+        "lastModified": 1642452856,
+        "narHash": "sha256-BMMuJ5zrl5/rdBX/Sl+F0RmRPyJR78sabdmWJao+FBw=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "8872f5f30ac135dce24a542ede4087499c204b79",
+        "rev": "12de9dc6c8c35cec730d134731e8cb7c282f0899",
         "type": "github"
       },
       "original": {
