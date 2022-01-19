@@ -80,6 +80,8 @@ discord-plugged.override {
 - The updater should be disabled, it doesn't work for obvious reasons :)
 - Settings are stored imperatively in `$XDG_CONFIG_HOME/powercord`
   (and cache in `$XDG_CACHE_HOME/powercord`)
+  - This unforunately is not perfect. If you notice some plugin's settings just disappear
+    after a restart (as it tried to write to the store), please open an issue here about it
 
 ## Some disclaimers
 Powercord *is* against Discord's Terms of Service. However, at the time of writing, Discord isn't
