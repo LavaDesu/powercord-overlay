@@ -12,4 +12,8 @@ inputs: final: prev: rec {
     plugins = [ ];
     themes = [ ];
   };
+
+  bdcompat = prev.callPackage ./drvs/bdcompat.nix {
+    plugins = [ ];
+  };
 }
