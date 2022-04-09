@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Check for updates
         id: check
         run: |
@@ -20,18 +21,29 @@ jobs:
           else
             echo "::set-output name=skip::0"
           fi
+
       - name: Install nix
-        if: ${{ steps.check.outputs.skip == 0 }}
+        if: steps.check.outputs.skip == 0
         uses: cachix/install-nix-action@v13
         with:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/download/nix-2.5pre20211026_5667822/install
           extra_nix_config: experimental-features = nix-command flakes
+
       - name: Update
-        if: ${{ steps.check.outputs.skip == 0 }}
+        if: steps.check.outputs.skip == 0
         run: ./update.sh
+
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
-        if: ${{ steps.check.outputs.skip == 0 }}
+        if: steps.check.outputs.skip == 0
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "chore(flake): bump inputs"
+
+      - name: Push
+        if: steps.check.outputs.skip == 0
+        uses: ad-m/github-push-action@master
         with:
-          commit_message: "chore(flake): bump inputs"
-          commit_author: "LavaDesu <me@lava.moe>"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
