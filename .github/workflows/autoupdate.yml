@@ -1,0 +1,37 @@
+name: Auto update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check for updates
+        id: check
+        run: |
+          local=$(cat flake.lock | jq ".nodes.powercord.locked.rev")
+          remote=$(curl "https://api.github.com/repos/powercord-org/powercord/commits?per_page=1" | jq ".[0].sha")
+          if [[ $local == $remote ]]; then
+            echo "::set-output name=skip::1"
+          else
+            echo "::set-output name=skip::0"
+          fi
+      - name: Install nix
+        if: ${{ steps.check.outputs.skip == 0 }}
+        uses: cachix/install-nix-action@v13
+        with:
+          install_url: https://github.com/numtide/nix-unstable-installer/releases/download/nix-2.5pre20211026_5667822/install
+          extra_nix_config: experimental-features = nix-command flakes
+      - name: Update
+        if: ${{ steps.check.outputs.skip == 0 }}
+        run: ./update.sh
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{ steps.check.outputs.skip == 0 }}
+        with:
+          commit_message: "chore(flake): bump inputs"
+          commit_author: "LavaDesu <me@lava.moe>"
