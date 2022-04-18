@@ -14,6 +14,10 @@ symlinkJoin {
   name = "discord-plugged";
   paths = [ discord-canary.out ];
 
+  meta = {
+    inherit (discord-canary.meta) mainProgram;
+  };
+
   postBuild = ''
     cp -r ${inputs.self}/plugs $out/opt/DiscordCanary/resources/app
     substituteInPlace $out/opt/DiscordCanary/resources/app/index.js --replace 'POWERCORD_SRC' '${powercordWithAddons}'
