@@ -1,4 +1,5 @@
 { inputs
+, lib
 , mkYarnPackage
 }:
 (mkYarnPackage {
@@ -19,7 +20,8 @@
 
   meta = {
     homepage = "https://powercord.dev";
-    license = "unfree";
+    license = lib.licenses.mit;
+    description = "A lightweight discord mod focused on simplicity and performance";
   };
 }).overrideAttrs (_: {
   doDist = false;
