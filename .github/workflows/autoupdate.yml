@@ -33,6 +33,10 @@ jobs:
         if: steps.check.outputs.skip == 0
         run: ./update.sh
 
+      - name: Build check
+        if: steps.check.outputs.skip == 0
+        run: nix build -L .#discord-plugged
+
       - name: Commit
         if: steps.check.outputs.skip == 0
         run: |
