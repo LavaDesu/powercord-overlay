@@ -19,11 +19,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1651118878,
-        "narHash": "sha256-2tRXU3xSXR30SHZ2HM07c+UQkjba2JF2EbyS19faA/c=",
+        "lastModified": 1651201279,
+        "narHash": "sha256-V9gHUYTp4z9gXXpJ/3i3yTNW3Wk5g2eCwBgcGeSG20M=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "e8e5d9d4c55f47e32deee36b4588d6e112c1212b",
+        "rev": "47592468f5490272af7301315cab11df0db702f8",
         "type": "github"
       },
       "original": {
