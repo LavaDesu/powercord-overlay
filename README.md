@@ -76,6 +76,24 @@ discord-plugged.override {
 }
 ```
 
+### BetterDiscord compatibility
+
+To install BetterDiscord plugins, the derivation `bdcompat` is provided, for which you can also apply overrides:
+
+```nix
+discord-plugged.override {
+  plugins = [
+
+    (bdcompat.override {
+      plugins = [
+        (builtins.fetchurl "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Library/0BDFDB.plugin.js")
+      ];
+    })
+
+  ];
+}
+```
+
 ## Additional notes
 - The updater should be disabled, it doesn't work for obvious reasons :)
 - Settings are stored imperatively in `$XDG_CONFIG_HOME/powercord`

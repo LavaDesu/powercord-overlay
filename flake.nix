@@ -18,6 +18,6 @@
     };
   in {
     inherit overlay;
-    packages.${system} = { inherit (pkgs) powercord-unwrapped powercord discord-plugged; };
+    packages.${system} = { inherit (pkgs) powercord-unwrapped powercord discord-plugged bdcompat; };
   };
 }
