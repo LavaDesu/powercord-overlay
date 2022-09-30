@@ -1,3 +1,10 @@
+# Deprecation notice
+
+This overlay is no longer being maintained. Powercord is EOL and Discord has released breaking changes affecting most client mods.
+
+See https://github.com/LunNova/replugged-nix-flake for a flake for [Replugged](https://replugged.dev), the community fork/successor of Powercord.
+As of 2022/09/30, it is [yet to support](https://github.com/replugged-org/replugged/issues/205) the breaking changes, but has plans to do so.
+
 # powercord-overlay
 An overlay to easily install Discord with [Powercord](https://powercord.dev)
 
